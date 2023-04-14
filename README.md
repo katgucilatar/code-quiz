@@ -2,9 +2,10 @@
 This timed coding quiz was created as a project for the UNC Coding Bootcamp. It was created using HTML, CSS, and Javascript implementing new concepts about Web API's that were learned in week 4 of the UNC Coding Bootcamp.
 
 ## Usage
-This quiz can be accessed at the following page:
+This quiz can be accessed at the following page: https://katgucilatar.github.io/code-quiz/
 
-This quiz can also be downloaded through its files in the Github repository at this link:
+This quiz can also be downloaded through its files in the Github repository at this link: 
+https://github.com/katgucilatar/code-quiz
 
 In order to access and edit the files, it is recommended to install VS Code or a similar application.
 
