@@ -1,3 +1,8 @@
+*{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: auto;
+    padding: 10px;
+}
 header {
     background-color:cadetblue;
     color:black;
@@ -35,4 +40,8 @@ button {
     justify-content: center;
     text-align: center;
 
+}
+
+.hide {
+    display: none;
 }

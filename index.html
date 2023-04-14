@@ -12,12 +12,24 @@
         <a href="scores.html">View Highscores</a>
     </navbar>
 </header>
-    <div class="container">
-        <div id="question-container" class="hide">
+
+    <div class="container-1">
+        <div id="start-screen">
             <h1> Timed Coding Quiz </h1>
             <p> Test your knowledge with these coding quesions! You will be given an initial time of 60 seconds but be aware that for every wrong choice, 10 seconds of time will be deducted. Good luck! </p>
+            <button id="start-btn">Start Quiz</button>
         </div>
     </div>
-    <button id="start-btn" class="start-btn btn">Start Quiz</button>
+    <div class="container-2"></div>
+        <div id="quiz-screen"></div>
+        <div id="timer">
+        <h1 class="time" style="text-align:center;"></h1>
+        </div>
+        <div id="final-score"></div>
+        <button id="submit-btn" class="hide">Submit Quiz</button>
+        <input type="text" id="initials" class="hide"/>
+    </div>
+    
+    <script src="script.js"></script>
 </body>
 </html>
