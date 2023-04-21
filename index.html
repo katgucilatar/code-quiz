@@ -20,14 +20,27 @@
             <button id="start-btn">Start Quiz</button>
         </div>
     </div>
-    <div class="container-2"></div>
-        <div id="quiz-screen"></div>
-        <div id="timer">
-        <h1 class="time" style="text-align:center;"></h1>
+
+    <div class="container-2">
+        <div id="quiz-screen">
+            <div id="timer"></div>
+            <h2 id="question"></h2>
+            <ul id="choice-container">
+                <li id="choice-1"></li>
+                <li id="choice-2"></li>
+                <li id="choice-3"></li>
+                <li id="choice-4"></li>
+            </ul>
         </div>
-        <div id="final-score"></div>
-        <button id="submit-btn" class="hide">Submit Quiz</button>
-        <input type="text" id="initials" class="hide"/>
+    </div>
+
+    <div class="container-3">
+        <div id="end-screen"></div>
+            <h1 id="final-score"> This is your high score!<h1>
+            <p> Enter your initials and press the submit button to save your high score! </p>
+            <input type="text" id="initials"/>
+            <button id="submit-btn">Submit Quiz</button>
+        </div>
     </div>
     
     <script src="script.js"></script>

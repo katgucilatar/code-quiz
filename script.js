@@ -1,110 +1,145 @@
-var questions = [
-    {
-      title: "What is NOT a component of CSS Flex Box?",
-      choices: ["justify-content", "align-items", "background-color", "flex-direction"],
+// variables
+var startScreen = document.querySelector('#start-screen');
+var startBtn = document.querySelector('#start-btn');
+var quizScreen = document.querySelector('#quiz-screen');
+var timer = document.querySelector('#timer');
+var endScreen = document.querySelector('#end-screen');
+var finalScore = document.querySelector('#final-score');
+var initials = document.querySelector('#initials');
+var submitBtn = document.querySelector('#submit-button');
+
+
+var secondsLeft = 60;
+var questionStart = 0;
+var question = document.querySelector('#question');
+var choiceContainer = document.querySelector('#choice-container');
+var firstChoice = document.querySelector('#choice-1');
+var secondChoice = document.querySelector('#choice-2');
+var thirdChoice = document.querySelector('#choice-3');
+var fourthChoice = document.querySelector('#choice-4');
+
+var questionIndex = [
+  {
+      question: "What is NOT a component of CSS Flex Box?",
+      firstChoice: "justify-content",
+      secondChoice: "align-items",
+      thirdChoice: "background-color",
+      fourthChoice: "flex-direction",
       answer: "background-color",
-    },
-    {
-      title: "How many components is included in a for loop?",
-      choices: ["1", "2", "3", "4"],
-      answer: "p3",
-    },
-    {
-      title: "What is NOT a component of HTML?",
-      choices: ["color", "body", "a", "footer"],
-      answer: "color",
-    },
-    {
-      title:
-        "What is CSS used for in web development?",
-      choices: ["deploying code", "creating domains", "interactivity", "design"],
-      answer: "design",
-    },
-    {
-      title:
-        "A very useful tool for used during development and debugging for printing content to the debugger is:",
-      choices: ["Javascript", "terminal / bash", "for loops", "console log"],
-      answer: "console log",
-    },
-  ];
-  
-  var score = 0;
-  var questionList = 0;
-  var startTime = 60;
-  var startScreen = document.getElementById("#start-screen")
-  var timeEl = document.getElementById("#timer");
-  var questionsDiv = document.getElementById("#questions");
-  var quizScreen = document.getElementById("#quiz-screen")
-  var startBtn = document.getElementById("#start-btn");
-  var submitBtn = document.getElementById("#submit-btn");
-  var initialsEl = document.getElementById("#initials");
+  },
+  {
+    question: "How many components is included in a for loop?",
+    firstChoice: "1",
+    secondChoice: "2",
+    thirdChoice: "3",
+    fourthChoice: "4",
+    answer: "3",
+},
+{
+  question: "What is NOT a component of HTML?",
+  firstChoice: "color",
+  secondChoice: "body",
+  thirdChoice: "a",
+  fourthChoice: "footer",
+  answer: "color",
+},
+{
+  question: "What is CSS used for in web development?",
+  firstChoice: "deploying code",
+  secondChoice: "creating domains",
+  thirdChoice: "interactivity",
+  fourthChoice: "design",
+  answer: "design",
+},
+{
+  question: "What can be accessed using Chrome DevTools?",
+  firstChoice: "Console",
+  secondChoice: "Hardware",
+  thirdChoice: "Troubleshooting Connection",
+  fourthChoice: "Audio",
+  answer: "Console",
+},
 
-  document.getElementById("#start-btn").addEventListener("click", startQuiz);
-  
-  function startQuiz() {
-    startScreen.setAttribute("class", "hide");
-    quizScreen.setAttribute("class", "show");
-    timerId = setInterval(tick, 1000);
-    timeEl.textContent = time;
-  
-    getQuestion();
-  }
+];
 
-  
-  function timerStart() {
-    time--;
-    timeEl.textContent = time;
-  
-    if (time <= 0) {
-      quizEnd();
-    }
-  }
+// functions
+// function: when start button is clicked: 1. start screen is hidden
+// 2. quiz screen including questions and answers are shown
+// 3. timer starts
+function startQuiz() {
+  startScreen.style.display = "none";
+  quizScreen.style.display = "flex"; 
+  startTimer();
+  showQuestions();
+}
 
-  function getQuestion() {
-    var currentQuestion = questions[title];
-    choicesEl.innerHTML = "";
-    currentQuestion.choices.forEach(function(choice, i) {
-      var choiceNode = document.createElement("button");
-      choiceNode.setAttribute("class", "choice");
-      choiceNode.setAttribute("value", choice);
-      choiceNode.textContent = i + 1 + ". " + choice;
-      choiceNode.onclick = questionClick;
-      choicesEl.appendChild(choiceNode);
-    });
-  }
+function startTimer() {
+  var timerInterval = setInterval(function() {
+    secondsLeft--;
+    timer.textContent = secondsLeft 
 
-  function questionClick() {
-    if (this.value !== questions[currentQuestionIndex].answer) {
-      time -= 10;
-      currentQuestionIndex++;
+    if(secondsLeft === 0) {
+      clearInterval(timerInterval);
+      endQuiz();
     }
 
-    if (currentQuestionIndex === questions.length) {
-      quizEnd();
-    } else {
-      getQuestion();
-    }
+  }, 1000);
+}
+
+function displayQuestion() {
+  question.innerHTML = "";
+  choiceContainer.innerHTML = "";
+  for (var i = 0; i < questionIndex.length; i++) {
+    var userQuestion = questionIndex.question;
+    var answerOne = questionIndex.firstChoice;
+    var answerTwo = questionIndex.secondChoice;
+    var answerThree = questionIndex.thirdChoice;
+    var answerFour = questionIndex.fourthChoice;
+    question.textContent = userQuestion;
+    firstChoice.textContent = answerOne;
+    secondChoice.textContent = answerTwo;
+    thirdChoice.textContent = answerThree;
+    fourthChoice.textContent = answerFour;
+}
+}
+
+function determineChoice(event) {
+  var choiceClicked = event.target;
+  var choice = document.querySelector('li');
+
+  if (choiceClicked === questionIndex.answer) {
+    questionIndex++
+    choice.style.backgroundColor = "green";
+
+  } else {
+    secondsLeft = secondsLeft-10;
+    choice.style.backgroundColor = "red";
   }
 
-  function quizEnd() {
-    clearInterval(timerId);
+}
 
-    var finalScoreEl = document.querySelector("#final-score");
-    finalScoreEl.textContent = time;
-  
-    quizScreen.setAttribute("class", "hide");
-  }
+function endQuiz() {
+ if (questionStart >= questionIndex.length) {
+  quizScreen.style.display = "none";
+  endScreen.style.display = "flex";
+ }
 
-  document.getElementById("#submit-btn").addEventListener("click", saveHighscore);
+ if (secondsLeft >= 0) {
+ var score = secondsLeft;
+ finalScore.textContent = "This is your final score: " + score;
+}
+}
 
-function saveHighscore() {
-    var initials = initialsEl.value.trim();
-  
-    if (initials !== "") {
-      var highscores = localStorage.setItem("highscores")
-      window.location.href = "scores.html";
-    }
-  }
+function saveToLocalStorage() {
+  var finalScore = {
+    initials: input.value,
+    score: secondsLeft,
+}
+localStorage.setItem("finalScore", JSON.stringify(finalScore));
+}
 
 
-  
+// event listeners
+startBtn.addEventListener('click', startQuiz);
+submitBtn.addEventListener('click', saveToLocalStorage);
+    

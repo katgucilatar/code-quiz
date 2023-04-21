@@ -42,6 +42,10 @@ button {
 
 }
 
-.hide {
+.container-2 {
+    display: none;
+}
+
+.container-3 {
     display: none;
 }
