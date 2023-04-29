@@ -1,12 +1,12 @@
 // variables
-var startScreen = document.querySelector('#start-screen');
+var startScreen = document.querySelector('.container-1');
 var startBtn = document.querySelector('#start-btn');
-var quizScreen = document.querySelector('#quiz-screen');
+var quizScreen = document.querySelector('.container-2');
 var timer = document.querySelector('#timer');
-var endScreen = document.querySelector('#end-screen');
+var endScreen = document.querySelector('.container-3');
 var finalScore = document.querySelector('#final-score');
 var initials = document.querySelector('#initials');
-var submitBtn = document.querySelector('#submit-button');
+var submitBtn = document.querySelector('#submit-btn');
 
 
 var secondsLeft = 60;
@@ -70,7 +70,7 @@ function startQuiz() {
   startScreen.style.display = "none";
   quizScreen.style.display = "flex"; 
   startTimer();
-  showQuestions();
+  displayQuestion();
 }
 
 function startTimer() {
@@ -78,7 +78,7 @@ function startTimer() {
     secondsLeft--;
     timer.textContent = secondsLeft 
 
-    if(secondsLeft === 0) {
+    if(secondsLeft <= 0) {
       clearInterval(timerInterval);
       endQuiz();
     }
@@ -87,14 +87,17 @@ function startTimer() {
 }
 
 function displayQuestion() {
-  question.innerHTML = "";
-  choiceContainer.innerHTML = "";
-  for (var i = 0; i < questionIndex.length; i++) {
-    var userQuestion = questionIndex.question;
-    var answerOne = questionIndex.firstChoice;
-    var answerTwo = questionIndex.secondChoice;
-    var answerThree = questionIndex.thirdChoice;
-    var answerFour = questionIndex.fourthChoice;
+  //question.innerHTML = "";
+  //choiceContainer.innerHTML = "";
+  //for (var i = 0; i < questionIndex.length; i++) {
+    if (questionStart<questionIndex.length) {
+
+    //}
+    var userQuestion = questionIndex[questionStart].question;
+    var answerOne = questionIndex[questionStart].firstChoice;
+    var answerTwo = questionIndex[questionStart].secondChoice;
+    var answerThree = questionIndex[questionStart].thirdChoice;
+    var answerFour = questionIndex[questionStart].fourthChoice;
     question.textContent = userQuestion;
     firstChoice.textContent = answerOne;
     secondChoice.textContent = answerTwo;
@@ -102,20 +105,22 @@ function displayQuestion() {
     fourthChoice.textContent = answerFour;
 }
 }
+firstChoice.addEventListener ('click', determineChoice)
+secondChoice.addEventListener ('click', determineChoice)
+thirdChoice.addEventListener ('click', determineChoice)
+fourthChoice.addEventListener ('click', determineChoice)
 
 function determineChoice(event) {
   var choiceClicked = event.target;
   var choice = document.querySelector('li');
 
-  if (choiceClicked === questionIndex.answer) {
-    questionIndex++
-    choice.style.backgroundColor = "green";
-
-  } else {
+  if (choiceClicked !== questionIndex.answer) {
+    //questionStart+
     secondsLeft = secondsLeft-10;
-    choice.style.backgroundColor = "red";
   }
-
+  
+  questionStart++
+  displayQuestion()
 }
 
 function endQuiz() {
@@ -124,22 +129,28 @@ function endQuiz() {
   endScreen.style.display = "flex";
  }
 
- if (secondsLeft >= 0) {
+ if (secondsLeft < 1) {
  var score = secondsLeft;
  finalScore.textContent = "This is your final score: " + score;
 }
 }
 
 function saveToLocalStorage() {
+  var input = document.getElementById('initials')
   var finalScore = {
     initials: input.value,
     score: secondsLeft,
 }
-localStorage.setItem("finalScore", JSON.stringify(finalScore));
+
+var scores = localStorage.getItem('finalScore') ? JSON.parse (localStorage.getItem('finalScore')) : []
+scores.push(finalScore) 
+localStorage.setItem("finalScore", JSON.stringify(scores));
 }
 
 
 // event listeners
 startBtn.addEventListener('click', startQuiz);
 submitBtn.addEventListener('click', saveToLocalStorage);
+
+
     
